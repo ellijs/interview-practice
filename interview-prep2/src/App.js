@@ -15,11 +15,24 @@ function App() {
 
   console.log(search)
 
-  const renderAllDogs = breeds.map(breed => <li key={breed}>{breed}</li>)
+  const renderSearchItem = () => {
+    if(!search) {
+      return breeds 
+    } else {
+      return [...breeds].filter(breed => breed.includes(search))
+    }
+  }
+
+  const renderAllDogs = renderSearchItem().map(breed => <li key={breed}>{breed}</li>)
+
+  const handleSearch = (e) => {
+      e.preventDefault();  
+  }
+
 
   return (
     <>
-    <form>
+    <form onSubmit={handleSearch}>
       <label>Enter Dog Breed</label>
       <input onChange={(e)=>setSearch(e.target.value)} placeholder='Dog breed here...'></input>
       <button>Search</button>
