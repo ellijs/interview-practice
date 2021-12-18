@@ -11,13 +11,13 @@ function RenderDogDetail({ detailedBreed }) {
 
   const renderDogImages = images.map((image) => (
     <li key={image}>
-      <img style={{width: "200px"}} src={image} />
+      <img style={{ width: "200px" }} src={image} />
     </li>
   ));
 
   console.log(images);
 
-  return <ul>{renderDogImages}</ul>;
+  return <ul style={{ listStyle: "none" }}>{renderDogImages}</ul>;
 }
 
 export default RenderDogDetail;

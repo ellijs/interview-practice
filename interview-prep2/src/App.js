@@ -16,13 +16,7 @@ function App() {
       .then((data) => setBreeds(Object.keys(data.message)));
   }, []);
 
-  const renderSearchItem = () => {
-    if (!search) {
-      return breeds;
-    } else {
-      return [...breeds].filter((breed) => breed.includes(search));
-    }
-  };
+  const renderSearchItem = breeds.filter((breed) => breed.includes(search));
 
   const handleDogDetail = (breed) => {
     setDetailedBreed(breed);
@@ -30,8 +24,12 @@ function App() {
     setSearch("");
   };
 
-  const renderAllDogs = renderSearchItem().map((breed) => (
-    <li key={breed} onClick={() => handleDogDetail(breed)}>
+  const renderAllDogs = renderSearchItem.map((breed) => (
+    <li
+      key={breed}
+      onClick={() => handleDogDetail(breed)}
+      style={{ cursor: "pointer" }}
+    >
       {breed}
     </li>
   ));
