@@ -1,19 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
+import RenderDogDetail from './RenderDogDetail'
 
 function App() {
   const api = 'https://dog.ceo/api/breeds/list/all'
   const [ breeds, setBreeds ] = useState([])
   const [ search, setSearch ] = useState('')
+  const [ isSelected, setIsSelected ] = useState(false)
+  const [ detailedBreed, setDetailedBreed ] = useState("")
 
   useEffect(() => {
       fetch(api)
       .then(resp => resp.json())
       .then(data=>setBreeds(Object.keys(data.message)))
   }, [])
-
-  console.log(search)
 
   const renderSearchItem = () => {
     if(!search) {
@@ -23,26 +24,38 @@ function App() {
     }
   }
 
-  const renderAllDogs = renderSearchItem().map(breed => <li key={breed}>{breed}</li>)
+  const handleDogDetail = (breed) => {
+    setDetailedBreed(breed)
 
-  const handleSearch = (e) => {
-      e.preventDefault();  
+    // fetch(`https://dog.ceo/api/breed/${breed}/images/random/3`)
+    // .then(resp=> resp.json())
+
+    setIsSelected(!isSelected)
+    setSearch("")
+   
   }
+
+  const renderAllDogs = renderSearchItem().map(breed => <li key={breed} onClick={()=>handleDogDetail(breed)} >{breed}</li>)
 
 
   return (
     <>
-    <form onSubmit={handleSearch}>
+    <form >
       <label>Enter Dog Breed</label>
       <input onChange={(e)=>setSearch(e.target.value)} placeholder='Dog breed here...'></input>
-      <button>Search</button>
+      <button onClick={handleDogDetail} >Search</button>
     </form>
-
+    { isSelected ?
+    <RenderDogDetail detailedBreed={detailedBreed} />
+    :
      <ul className='dog-list'>
        {renderAllDogs}
      </ul>
+     }
      </>
   );
 }
 
 export default App;
+
+
