@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-function RenderDogDetail({detailedBreed}) {
-    const [ images, setImages ] = useState([])
+function RenderDogDetail({ detailedBreed }) {
+  const [images, setImages] = useState([]);
 
+  useEffect(() => {
+    fetch(`https://dog.ceo/api/breed/${detailedBreed}/images/random/3`)
+      .then((resp) => resp.json())
+      .then((data) => setImages(data.message));
+  }, [detailedBreed]);
 
-    useEffect(()=> {
-        fetch(`https://dog.ceo/api/breed/${detailedBreed}/images/random/3`)
-        .then(resp => resp.json())
-        .then(data => setImages(data.message))
-    }, [detailedBreed])
+  const renderDogImages = images.map((image) => (
+    <li key={image}>
+      <img src={image} />
+    </li>
+  ));
 
-    const renderDogImages = images.map(image => <li key={image}><img src={image} /></li>)
+  console.log(images);
 
-   console.log(images)
-
-    return (
-        <ul>
-
-            {renderDogImages}
-        </ul>
-    );
+  return <ul>{renderDogImages}</ul>;
 }
 
 export default RenderDogDetail;
