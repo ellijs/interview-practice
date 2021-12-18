@@ -27,8 +27,6 @@ function App() {
   const handleDogDetail = (breed) => {
     setDetailedBreed(breed)
 
-    // fetch(`https://dog.ceo/api/breed/${breed}/images/random/3`)
-    // .then(resp=> resp.json())
 
     setIsSelected(!isSelected)
     setSearch("")
@@ -43,7 +41,8 @@ function App() {
     <form >
       <label>Enter Dog Breed</label>
       <input onChange={(e)=>setSearch(e.target.value)} placeholder='Dog breed here...'></input>
-      <button onClick={handleDogDetail} >Search</button>
+      {isSelected ? <button onClick={()=>setIsSelected(!isSelected)} >Search NewBreed</button>:<button onClick={handleDogDetail} >Search</button>}
+      
     </form>
     { isSelected ?
     <RenderDogDetail detailedBreed={detailedBreed} />
